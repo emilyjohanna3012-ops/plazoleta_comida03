@@ -11,8 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import com.plazoleta.usuarios.domain.spi.TokenPort;
+import com.plazoleta.usuarios.infrastructure.security.JwtTokenAdapter;
 
-/** Aquí "conectamos" los puertos con sus adaptadores. */
+/** AquÃ­ "conectamos" los puertos con sus adaptadores. */
 @Configuration
 public class BeanConfiguration implements WebMvcConfigurer {
 
@@ -25,6 +27,14 @@ public class BeanConfiguration implements WebMvcConfigurer {
     public PasswordEncoderPort passwordEncoderPort() {
         return new BcryptPasswordEncoderAdapter();
     }
+
+    @Bean
+public JwtTokenAdapter tokenPort(
+        @org.springframework.beans.factory.annotation.Value("${jwt.secret}") String secreto,
+        @org.springframework.beans.factory.annotation.Value("${jwt.expiration}") long expiracion) {
+
+    return new JwtTokenAdapter(secreto, expiracion);
+}
 
     @Bean
     public UserServicePort userServicePort(UserPersistencePort persistencePort, PasswordEncoderPort encoderPort) {

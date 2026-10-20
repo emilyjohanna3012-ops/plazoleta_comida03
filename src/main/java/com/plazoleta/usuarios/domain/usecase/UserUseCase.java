@@ -66,6 +66,28 @@ public class UserUseCase implements UserServicePort {
         return persistencePort.guardar(user);
     }
 
+    @Override
+public User iniciarSesion(String correo, String clave) {
+
+    // Comprobar que escribieron correo y contraseña
+    if (esVacio(correo) || esVacio(clave)) {
+        throw new DomainException("Correo o contraseña incorrectos");
+    }
+
+    // Buscar al usuario en la base de datos
+    User usuario = persistencePort.buscarPorCorreo(correo)
+            .orElseThrow(() ->
+                    new DomainException("Correo o contraseña incorrectos"));
+
+    // Verificar la contraseña utilizando BCrypt
+    if (!passwordEncoderPort.verificar(clave, usuario.getClave())) {
+        throw new DomainException("Correo o contraseña incorrectos");
+    }
+
+    // Devolver el usuario autenticado
+    return usuario;
+}
+
     private void validarCamposObligatorios(User u) {
         if (esVacio(u.getNombre())) throw new DomainException("El nombre es obligatorio");
         if (esVacio(u.getApellido())) throw new DomainException("El apellido es obligatorio");

@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.plazoleta.usuarios.domain.spi.TokenPort;
+import com.plazoleta.usuarios.infrastructure.input.rest.dto.LoginRequest;
+import com.plazoleta.usuarios.infrastructure.input.rest.dto.LoginResponse;
 
 /** Adaptador de ENTRADA: recibe HTTP y llama al caso de uso. */
 @RestController
@@ -16,11 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Usuarios")
 public class UserRestController {
 
-    private final UserServicePort userServicePort;
+  private final UserServicePort userServicePort;
+private final TokenPort tokenPort;
 
-    public UserRestController(UserServicePort userServicePort) {
-        this.userServicePort = userServicePort;
-    }
+public UserRestController(UserServicePort userServicePort, TokenPort tokenPort) {
+    this.userServicePort = userServicePort;
+    this.tokenPort = tokenPort;
+}
 
     @Operation(summary = "HU1 - Crear un usuario con rol PROPIETARIO")
     @PostMapping("/propietario")
@@ -68,4 +73,27 @@ public class UserRestController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    @Operation(summary = "HU5 - Iniciar sesión")
+@PostMapping("/login")
+public ResponseEntity<LoginResponse> iniciarSesion(
+        @RequestBody LoginRequest request) {
+
+    // Comprobar correo y contraseña
+    User usuario = userServicePort.iniciarSesion(
+            request.correo(),
+            request.clave()
+    );
+
+    // Generar el token JWT
+    String token = tokenPort.generarToken(usuario);
+
+    // Devolver el token y el rol, nunca la contraseña
+    LoginResponse response = new LoginResponse(
+            token,
+            "Bearer",
+            usuario.getRol().name()
+    );
+
+    return ResponseEntity.ok(response);
+}
 }

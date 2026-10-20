@@ -4,11 +4,17 @@ server:
 spring:
   application:
     name: usuarios-ms
+
   datasource:
     url: jdbc:mysql://localhost:3306/plazoleta_usuarios?createDatabaseIfNotExist=true&serverTimezone=America/Bogota
     username: root
     password: ${DB_PASSWORD}
+
   jpa:
     hibernate:
-      ddl-auto: update   # crea/actualiza las tablas solo
+      ddl-auto: update
     show-sql: true
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 3600000

@@ -4,6 +4,8 @@ import com.plazoleta.usuarios.domain.model.User;
 import com.plazoleta.usuarios.domain.spi.UserPersistencePort;
 import com.plazoleta.usuarios.infrastructure.output.jpa.entity.UserEntity;
 import com.plazoleta.usuarios.infrastructure.output.jpa.repository.UserRepository;
+import java.util.Optional;
+
 
 /** Adaptador de SALIDA: implementa el puerto usando JPA/MySQL. */
 public class UserJpaAdapter implements UserPersistencePort {
@@ -23,6 +25,11 @@ public class UserJpaAdapter implements UserPersistencePort {
     public boolean existePorCorreo(String correo) {
         return repository.existsByCorreo(correo);
     }
+
+    @Override
+public Optional<User> buscarPorCorreo(String correo) {
+    return repository.findByCorreo(correo).map(this::toDomain);
+}
 
     @Override
     public boolean existePorDocumento(String documento) {

@@ -1,6 +1,7 @@
 package com.plazoleta.usuarios.infrastructure.exceptionhandler;
 
 import com.plazoleta.usuarios.domain.exception.DomainException;
+import com.plazoleta.usuarios.domain.exception.RecursoNoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -11,6 +12,11 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(RecursoNoEncontradoException.class)
+    public ResponseEntity<Map<String, String>> handleNoEncontrado(RecursoNoEncontradoException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("mensaje", ex.getMessage()));
+    }
 
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<Map<String, String>> handleDomain(DomainException ex) {

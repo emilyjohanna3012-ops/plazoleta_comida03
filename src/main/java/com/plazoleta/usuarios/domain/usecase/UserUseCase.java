@@ -2,6 +2,7 @@ package com.plazoleta.usuarios.domain.usecase;
 
 import com.plazoleta.usuarios.domain.api.UserServicePort;
 import com.plazoleta.usuarios.domain.exception.DomainException;
+import com.plazoleta.usuarios.domain.exception.RecursoNoEncontradoException;
 import com.plazoleta.usuarios.domain.model.Role;
 import com.plazoleta.usuarios.domain.model.User;
 import com.plazoleta.usuarios.domain.spi.PasswordEncoderPort;
@@ -87,6 +88,12 @@ public User iniciarSesion(String correo, String clave) {
     // Devolver el usuario autenticado
     return usuario;
 }
+
+    @Override
+    public User obtenerUsuario(Long id) {
+        return persistencePort.buscarPorId(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException("No existe un usuario con id " + id));
+    }
 
     private void validarCamposObligatorios(User u) {
         if (esVacio(u.getNombre())) throw new DomainException("El nombre es obligatorio");

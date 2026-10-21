@@ -30,9 +30,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/v1/usuarios/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/usuarios/cliente").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/error").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/usuarios/propietario")
                         .hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/usuarios/*").authenticated()
                         .anyRequest().denyAll()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

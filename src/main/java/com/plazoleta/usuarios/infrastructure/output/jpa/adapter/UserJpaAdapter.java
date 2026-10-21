@@ -36,6 +36,11 @@ public Optional<User> buscarPorCorreo(String correo) {
         return repository.existsByDocumento(documento);
     }
 
+    @Override
+    public Optional<User> buscarPorId(Long id) {
+        return repository.findById(id).map(this::toDomain);
+    }
+
     private UserEntity toEntity(User u) {
         UserEntity e = new UserEntity();
         e.setId(u.getId());

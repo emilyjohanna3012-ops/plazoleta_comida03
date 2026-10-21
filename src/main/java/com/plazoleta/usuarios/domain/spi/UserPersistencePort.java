@@ -14,4 +14,7 @@ public interface UserPersistencePort {
 
     /** Esto permitirá buscar un usuario por su correo. */
     Optional<User> buscarPorCorreo(String correo);
+
+    /** Buscar un usuario por su id. */
+    Optional<User> buscarPorId(Long id);
 }

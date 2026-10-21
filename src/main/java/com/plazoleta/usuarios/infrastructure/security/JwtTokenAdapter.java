@@ -34,9 +34,16 @@ public class JwtTokenAdapter implements TokenPort {
         Date ahora = new Date();
         Date vencimiento = new Date(ahora.getTime() + expiracion);
 
-        return Jwts.builder()
+        var constructor = Jwts.builder()
                 .subject(usuario.getCorreo())
-                .claim("rol", usuario.getRol().name())
+                .claim("rol", usuario.getRol().name());
+
+        // Plazoleta necesita el id del usuario (por ejemplo, para saber de quién es cada restaurante)
+        if (usuario.getId() != null) {
+            constructor.claim("id", usuario.getId());
+        }
+
+        return constructor
                 .issuedAt(ahora)
                 .expiration(vencimiento)
                 .signWith(claveSecreta)

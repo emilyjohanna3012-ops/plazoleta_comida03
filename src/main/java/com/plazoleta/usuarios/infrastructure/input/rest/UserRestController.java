@@ -111,4 +111,24 @@ public class UserRestController {
                 )
         );
     }
+
+    // CONSULTAR USUARIO POR ID (lo usa el microservicio Plazoleta para validar el rol en la HU2)
+    @Operation(summary = "Consultar un usuario por id")
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> obtenerUsuario(@PathVariable Long id) {
+
+        User usuario = userServicePort.obtenerUsuario(id);
+
+        return ResponseEntity.ok(new UserResponse(
+                usuario.getId(),
+                usuario.getNombre(),
+                usuario.getApellido(),
+                usuario.getDocumento(),
+                usuario.getCelular(),
+                usuario.getFechaNacimiento(),
+                usuario.getCorreo(),
+                usuario.getRol().name()
+        ));
+    }
 }

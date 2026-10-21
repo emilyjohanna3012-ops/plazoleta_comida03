@@ -52,11 +52,14 @@ public Optional<User> buscarPorCorreo(String correo) {
         e.setCorreo(u.getCorreo());
         e.setClave(u.getClave());
         e.setRol(u.getRol());
+        e.setIdRestaurante(u.getIdRestaurante());
         return e;
     }
 
     private User toDomain(UserEntity e) {
-        return new User(e.getId(), e.getNombre(), e.getApellido(), e.getDocumento(), e.getCelular(),
+        User u = new User(e.getId(), e.getNombre(), e.getApellido(), e.getDocumento(), e.getCelular(),
                 e.getFechaNacimiento(), e.getCorreo(), e.getClave(), e.getRol());
+        u.setIdRestaurante(e.getIdRestaurante());
+        return u;
     }
 }

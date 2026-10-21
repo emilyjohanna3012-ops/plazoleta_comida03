@@ -1,18 +1,20 @@
 package com.plazoleta.usuarios.domain.usecase;
 
 import com.plazoleta.usuarios.domain.api.UserServicePort;
+import com.plazoleta.usuarios.domain.exception.AccesoDenegadoException;
 import com.plazoleta.usuarios.domain.exception.DomainException;
 import com.plazoleta.usuarios.domain.exception.RecursoNoEncontradoException;
 import com.plazoleta.usuarios.domain.model.Role;
 import com.plazoleta.usuarios.domain.model.User;
 import com.plazoleta.usuarios.domain.spi.PasswordEncoderPort;
+import com.plazoleta.usuarios.domain.spi.RestauranteConsultaPort;
 import com.plazoleta.usuarios.domain.spi.UserPersistencePort;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.regex.Pattern;
 
-/** Caso de uso: aquí viven las reglas de la HU 1. */
+/** Caso de uso: aquí viven las reglas de las HU 1, 5, 6 y 8. */
 public class UserUseCase implements UserServicePort {
 
     private static final Pattern EMAIL = Pattern.compile("^[\\w.+-]+@[\\w-]+(\\.[\\w-]+)+$");
@@ -21,10 +23,13 @@ public class UserUseCase implements UserServicePort {
 
     private final UserPersistencePort persistencePort;
     private final PasswordEncoderPort passwordEncoderPort;
+    private final RestauranteConsultaPort restauranteConsultaPort;
 
-    public UserUseCase(UserPersistencePort persistencePort, PasswordEncoderPort passwordEncoderPort) {
+    public UserUseCase(UserPersistencePort persistencePort, PasswordEncoderPort passwordEncoderPort,
+                       RestauranteConsultaPort restauranteConsultaPort) {
         this.persistencePort = persistencePort;
         this.passwordEncoderPort = passwordEncoderPort;
+        this.restauranteConsultaPort = restauranteConsultaPort;
     }
 
     @Override
@@ -88,6 +93,37 @@ public User iniciarSesion(String correo, String clave) {
     // Devolver el usuario autenticado
     return usuario;
 }
+
+    @Override
+    public User crearEmpleado(User empleado, String correoPropietario) {
+        validarCamposObligatorios(empleado);
+        validarCorreo(empleado.getCorreo());
+        validarCelular(empleado.getCelular());
+        validarDocumento(empleado.getDocumento());
+        if (empleado.getIdRestaurante() == null) {
+            throw new DomainException("El restaurante del empleado es obligatorio");
+        }
+
+        if (persistencePort.existePorCorreo(empleado.getCorreo())) {
+            throw new DomainException("Ya existe un usuario con ese correo");
+        }
+        if (persistencePort.existePorDocumento(empleado.getDocumento())) {
+            throw new DomainException("Ya existe un usuario con ese documento de identidad");
+        }
+
+        // Solo se pueden crear empleados para un restaurante propio
+        User propietario = persistencePort.buscarPorCorreo(correoPropietario)
+                .orElseThrow(() -> new AccesoDenegadoException("No se pudo identificar al propietario que hace la petición"));
+        Long idDuenioDelRestaurante = restauranteConsultaPort.obtenerIdPropietario(empleado.getIdRestaurante())
+                .orElseThrow(() -> new RecursoNoEncontradoException("El restaurante no existe"));
+        if (!idDuenioDelRestaurante.equals(propietario.getId())) {
+            throw new AccesoDenegadoException("Solo puedes crear empleados para tu propio restaurante");
+        }
+
+        empleado.setRol(Role.EMPLEADO); // el rol lo asigna el sistema, nunca el que llama
+        empleado.setClave(passwordEncoderPort.encriptar(empleado.getClave()));
+        return persistencePort.guardar(empleado);
+    }
 
     @Override
     public User obtenerUsuario(Long id) {

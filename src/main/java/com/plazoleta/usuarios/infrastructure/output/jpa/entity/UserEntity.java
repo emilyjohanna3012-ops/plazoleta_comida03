@@ -29,6 +29,8 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role rol;
+    @Column(name = "id_restaurante")
+    private Long idRestaurante;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -48,4 +50,6 @@ public class UserEntity {
     public void setClave(String clave) { this.clave = clave; }
     public Role getRol() { return rol; }
     public void setRol(Role rol) { this.rol = rol; }
+    public Long getIdRestaurante() { return idRestaurante; }
+    public void setIdRestaurante(Long idRestaurante) { this.idRestaurante = idRestaurante; }
 }

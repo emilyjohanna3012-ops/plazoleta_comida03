@@ -11,5 +11,6 @@ public record UserResponse(
         String celular,
         LocalDate fechaNacimiento,
         String correo,
-        String rol) {
+        String rol,
+        Long idRestaurante) {
 }

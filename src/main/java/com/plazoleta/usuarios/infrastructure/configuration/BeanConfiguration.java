@@ -2,11 +2,16 @@ package com.plazoleta.usuarios.infrastructure.configuration;
 
 import com.plazoleta.usuarios.domain.api.UserServicePort;
 import com.plazoleta.usuarios.domain.spi.PasswordEncoderPort;
+import com.plazoleta.usuarios.domain.spi.RestauranteConsultaPort;
 import com.plazoleta.usuarios.domain.spi.UserPersistencePort;
 import com.plazoleta.usuarios.domain.usecase.UserUseCase;
 import com.plazoleta.usuarios.infrastructure.output.jpa.adapter.BcryptPasswordEncoderAdapter;
 import com.plazoleta.usuarios.infrastructure.output.jpa.adapter.UserJpaAdapter;
 import com.plazoleta.usuarios.infrastructure.output.jpa.repository.UserRepository;
+import com.plazoleta.usuarios.infrastructure.output.rest.PropagarTokenInterceptor;
+import com.plazoleta.usuarios.infrastructure.output.rest.RestauranteRestClientAdapter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -36,9 +41,20 @@ public JwtTokenAdapter tokenPort(
     return new JwtTokenAdapter(secreto, expiracion);
 }
 
+    /** Consulta de restaurantes al microservicio Plazoleta (HU6). */
     @Bean
-    public UserServicePort userServicePort(UserPersistencePort persistencePort, PasswordEncoderPort encoderPort) {
-        return new UserUseCase(persistencePort, encoderPort);
+    public RestauranteConsultaPort restauranteConsultaPort(RestClient.Builder builder,
+                                                           @Value("${plazoleta.url:http://localhost:8082}") String plazoletaUrl) {
+        return new RestauranteRestClientAdapter(builder
+                .baseUrl(plazoletaUrl)
+                .requestInterceptor(new PropagarTokenInterceptor())
+                .build());
+    }
+
+    @Bean
+    public UserServicePort userServicePort(UserPersistencePort persistencePort, PasswordEncoderPort encoderPort,
+                                           RestauranteConsultaPort restauranteConsultaPort) {
+        return new UserUseCase(persistencePort, encoderPort, restauranteConsultaPort);
     }
 
     /** Permite que el frontend HTML (otro puerto/origen) llame a esta API. */

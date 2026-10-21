@@ -42,6 +42,10 @@ public class JwtTokenAdapter implements TokenPort {
         if (usuario.getId() != null) {
             constructor.claim("id", usuario.getId());
         }
+        // Solo los empleados: así Plazoleta sabe a qué restaurante pertenecen (HU6, HU12, HU13)
+        if (usuario.getIdRestaurante() != null) {
+            constructor.claim("idRestaurante", usuario.getIdRestaurante());
+        }
 
         return constructor
                 .issuedAt(ahora)

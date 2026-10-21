@@ -9,6 +9,9 @@ public interface UserServicePort {
 
     User crearCliente(User user);
 
+    /** HU6: un propietario crea la cuenta de un empleado de SU restaurante (empleado.idRestaurante). */
+    User crearEmpleado(User empleado, String correoPropietario);
+
     User iniciarSesion(String correo, String clave);
 
     /** Consultar un usuario por id (lo usa el microservicio Plazoleta en la HU2). */

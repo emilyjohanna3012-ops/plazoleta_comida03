@@ -1,0 +1,9 @@
+package com.plazoleta.usuarios.domain.spi;
+
+import com.plazoleta.usuarios.domain.model.User;
+
+public interface TokenPort {
+
+    String generarToken(User usuario);
+
+}

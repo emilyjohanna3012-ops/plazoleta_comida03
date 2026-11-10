@@ -4,6 +4,8 @@ import com.plazoleta.usuarios.domain.model.User;
 import com.plazoleta.usuarios.domain.spi.UserPersistencePort;
 import com.plazoleta.usuarios.infrastructure.output.jpa.entity.UserEntity;
 import com.plazoleta.usuarios.infrastructure.output.jpa.repository.UserRepository;
+import java.util.Optional;
+
 
 /** Adaptador de SALIDA: implementa el puerto usando JPA/MySQL. */
 public class UserJpaAdapter implements UserPersistencePort {
@@ -25,8 +27,18 @@ public class UserJpaAdapter implements UserPersistencePort {
     }
 
     @Override
+public Optional<User> buscarPorCorreo(String correo) {
+    return repository.findByCorreo(correo).map(this::toDomain);
+}
+
+    @Override
     public boolean existePorDocumento(String documento) {
         return repository.existsByDocumento(documento);
+    }
+
+    @Override
+    public Optional<User> buscarPorId(Long id) {
+        return repository.findById(id).map(this::toDomain);
     }
 
     private UserEntity toEntity(User u) {
@@ -40,11 +52,14 @@ public class UserJpaAdapter implements UserPersistencePort {
         e.setCorreo(u.getCorreo());
         e.setClave(u.getClave());
         e.setRol(u.getRol());
+        e.setIdRestaurante(u.getIdRestaurante());
         return e;
     }
 
     private User toDomain(UserEntity e) {
-        return new User(e.getId(), e.getNombre(), e.getApellido(), e.getDocumento(), e.getCelular(),
+        User u = new User(e.getId(), e.getNombre(), e.getApellido(), e.getDocumento(), e.getCelular(),
                 e.getFechaNacimiento(), e.getCorreo(), e.getClave(), e.getRol());
+        u.setIdRestaurante(e.getIdRestaurante());
+        return u;
     }
 }

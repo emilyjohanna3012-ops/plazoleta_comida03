@@ -1,0 +1,14 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: trazabilidad-ms
+  data:
+    mongodb:
+      # MongoDB local por defecto; la base plazoleta_trazabilidad se crea sola con el primer registro
+      uri: ${MONGODB_URI:mongodb://localhost:27017/plazoleta_trazabilidad}
+
+# Debe ser EXACTAMENTE la misma clave JWT_SECRET que usan usuarios-ms y plazoleta-ms (mínimo 32 caracteres)
+jwt:
+  secret: ${JWT_SECRET}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión · Plazoleta de comidas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentes.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login">
+    <section class="login__portada" aria-hidden="true">
+        <div class="login__portada-contenido">
+            <div class="marca marca--clara">
+                <span class="marca__logo" id="logo-portada"></span>
+                <span class="marca__texto">
+                    <span class="marca__nombre">Plazoleta</span>
+                    <span class="marca__sub">de comidas</span>
+                </span>
+            </div>
+            <h1>Todos los sabores de la plazoleta, en un solo lugar.</h1>
+            <ul class="login__beneficios" id="beneficios"></ul>
+        </div>
+        <div class="login__decoracion">
+            <span class="plato plato--1"></span>
+            <span class="plato plato--2"></span>
+            <span class="plato plato--3"></span>
+        </div>
+    </section>
+
+    <main class="login__panel">
+        <form class="login__formulario" id="formulario-login" novalidate>
+            <p class="titulo-pagina__eyebrow">Bienvenido de nuevo</p>
+            <h2>Inicia sesión</h2>
+            <p class="login__sub">Usa el correo y la contraseña de tu cuenta.</p>
+
+            <div class="login__alerta" id="alerta" role="alert" hidden></div>
+
+            <div class="campo">
+                <label for="correo">Correo electrónico</label>
+                <div class="entrada-con-icono" data-icono="correo">
+                    <input class="entrada" type="email" id="correo" name="correo" autocomplete="email"
+                           placeholder="tu@correo.com" required>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="clave">Contraseña</label>
+                <div class="entrada-con-icono" data-icono="candado">
+                    <input class="entrada" type="password" id="clave" name="clave" autocomplete="current-password"
+                           placeholder="••••••••" required>
+                    <button class="btn btn--fantasma" type="button" id="ver-clave" aria-label="Mostrar contraseña"></button>
+                </div>
+            </div>
+
+            <button class="btn btn--primario btn--bloque" type="submit" id="btn-entrar"><span>Iniciar sesión</span></button>
+
+            <p class="login__registro">¿No tienes cuenta? <a href="registro.html">Regístrate como cliente</a></p>
+        </form>
+    </main>
+
+    <script type="module" src="js/paginas/login.js"></script>
+</body>
+</html>

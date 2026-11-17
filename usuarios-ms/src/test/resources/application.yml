@@ -9,5 +9,5 @@ spring:
       ddl-auto: create-drop
 
 jwt:
-  secret: clave-secreta-solo-para-pruebas-con-mas-de-32-bytes
+  secret: ${JWT_SECRET:clave-local-solo-para-pruebas-123456789012345678901234567890}
   expiration: 3600000

@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      # En las pruebas la base se simula con @MockBean; esta URI nunca se usa para guardar nada
+      uri: mongodb://localhost:27017/plazoleta_trazabilidad_test
+
+jwt:
+  secret: ${JWT_SECRET:clave-local-solo-para-pruebas-123456789012345678901234567890}

@@ -1,0 +1,67 @@
+/* login.css — solo para index.html (inicio de sesión) */
+
+body.login { flex-direction: row; min-height: 100vh; }
+
+/* ---------- Portada (lado izquierdo) ---------- */
+.login__portada {
+    position: relative; overflow: hidden;
+    flex: 1.1; display: flex; align-items: center;
+    padding: 56px clamp(32px, 6vw, 88px);
+    color: #fff;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(255, 196, 120, .35), transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(120, 30, 10, .45), transparent 50%),
+        linear-gradient(150deg, #E2683A 0%, #C8461F 55%, #8F2F14 100%);
+}
+.login__portada-contenido { position: relative; z-index: 1; max-width: 480px; }
+.login__portada h1 { color: #fff; font-size: clamp(2rem, 3.6vw, 3rem); margin: 40px 0 28px; }
+.marca--clara .marca__logo { background: rgba(255, 255, 255, .18); box-shadow: none; border: 1px solid rgba(255, 255, 255, .3); }
+.marca--clara .marca__nombre { color: #fff; }
+.marca--clara .marca__sub { color: rgba(255, 255, 255, .7); }
+
+.login__beneficios { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.login__beneficios li { display: flex; align-items: center; gap: 12px; font-weight: 600; color: rgba(255, 255, 255, .92); }
+.login__beneficios li span {
+    width: 38px; height: 38px; flex-shrink: 0; border-radius: 12px;
+    display: grid; place-items: center; background: rgba(255, 255, 255, .15);
+}
+.login__beneficios svg { width: 20px; height: 20px; }
+
+/* Platos decorativos hechos solo con CSS */
+.login__decoracion { position: absolute; inset: 0; pointer-events: none; }
+.plato {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, .16) 0 45%, rgba(255, 255, 255, .07) 46% 62%, transparent 63%);
+    border: 1px solid rgba(255, 255, 255, .14);
+    animation: flotar 9s ease-in-out infinite;
+}
+.plato--1 { width: 340px; height: 340px; right: -110px; top: -70px; }
+.plato--2 { width: 200px; height: 200px; right: 70px; bottom: 60px; animation-delay: -3s; }
+.plato--3 { width: 120px; height: 120px; left: 46%; bottom: -30px; animation-delay: -6s; }
+@keyframes flotar { 50% { transform: translateY(-14px) rotate(6deg); } }
+
+/* ---------- Panel del formulario (lado derecho) ---------- */
+.login__panel { flex: 1; display: grid; place-items: center; padding: 40px 24px; background: var(--color-fondo); }
+.login__formulario { width: min(400px, 100%); }
+.login__formulario h2 { font-size: 2rem; }
+.login__sub { color: var(--color-texto-suave); margin: 6px 0 28px; }
+.login__formulario .btn--bloque { min-height: 50px; margin-top: 8px; font-size: 1rem; }
+.login__registro { text-align: center; margin-top: 22px; color: var(--color-texto-suave); font-size: .92rem; }
+.login__registro a { font-weight: 700; }
+
+.login__alerta {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 12px 14px; margin-bottom: 18px; border-radius: 12px;
+    background: var(--color-error-suave); color: var(--color-error); font-weight: 600; font-size: .9rem;
+}
+.login__alerta svg { width: 20px; height: 20px; flex-shrink: 0; }
+.login__alerta--info { background: var(--color-info-suave); color: var(--color-info); }
+
+@media (max-width: 900px) {
+    body.login { flex-direction: column; }
+    .login__portada { flex: none; padding: 32px 24px 36px; }
+    .login__portada h1 { font-size: 1.7rem; margin: 22px 0 0; }
+    .login__beneficios, .plato--2, .plato--3 { display: none; }
+    .plato--1 { width: 220px; height: 220px; right: -70px; top: -60px; }
+    .login__panel { place-items: start center; padding: 32px 20px 48px; }
+}

@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crear cuenta - Plazoleta de comidas</title>
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentes.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <main class="pagina">
+        <div class="contenedor">
+
+            <section class="tarjeta"
+                     style="max-width:550px;margin:40px auto;padding:30px;">
+
+                <h1>Crear cuenta</h1>
+
+                <p>
+                    Regístrate para disfrutar de nuestra
+                    plazoleta de comidas.
+                </p>
+
+                <form id="formRegistro">
+
+                    <div class="campo">
+                        <label for="nombre">Nombre</label>
+                        <input
+                            id="nombre"
+                            name="nombre"
+                            type="text"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="apellido">Apellido</label>
+                        <input
+                            id="apellido"
+                            name="apellido"
+                            type="text"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="documento">
+                            Documento de identidad
+                        </label>
+                        <input
+                            id="documento"
+                            name="documento"
+                            type="text"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="celular">Celular</label>
+                        <input
+                            id="celular"
+                            name="celular"
+                            type="tel"
+                            required>
+                    </div>
+
+                    <!-- HU8: Fecha de nacimiento -->
+                    <div class="campo">
+                        <label for="fechaNacimiento">
+                            Fecha de nacimiento
+                        </label>
+                        <input
+                            id="fechaNacimiento"
+                            name="fechaNacimiento"
+                            type="date"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="correo">
+                            Correo electrónico
+                        </label>
+                        <input
+                            id="correo"
+                            name="correo"
+                            type="email"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="clave">Contraseña</label>
+                        <input
+                            id="clave"
+                            name="clave"
+                            type="password"
+                            minlength="8"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="confirmarClave">
+                            Confirmar contraseña
+                        </label>
+                        <input
+                            id="confirmarClave"
+                            name="confirmarClave"
+                            type="password"
+                            minlength="8"
+                            required>
+                    </div>
+
+                    <button
+                        class="btn btn--primario btn--bloque"
+                        type="submit">
+                        Crear mi cuenta
+                    </button>
+
+                    <p
+                        id="mensajeRegistro"
+                        role="status"
+                        aria-live="polite"
+                        style="margin-top:15px;">
+                    </p>
+
+                </form>
+
+                <p style="margin-top:20px;text-align:center;">
+                    ¿Ya tienes cuenta?
+                    <a href="index.html">
+                        Iniciar sesión
+                    </a>
+                </p>
+
+            </section>
+
+        </div>
+    </main>
+
+    <script
+        type="module"
+        src="js/paginas/registro.js">
+    </script>
+
+</body>
+</html>

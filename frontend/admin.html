@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración · Plazoleta de comidas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentes.css">
+    <!-- Melissa: si su página necesita estilos propios, créenlos en css/admin.css y enlácenlos aquí -->
+</head>
+<body>
+    <header id="encabezado"></header>
+
+    <main class="pagina">
+        <div class="contenedor" id="contenido">
+            <!-- Melissa: aquí va el contenido de esta página (lo pinta js/paginas/admin.js) -->
+            <section class="tarjeta construccion">
+                <div class="vacio__icono" data-icono="cocina"></div>
+                <h1>Administración</h1>
+                <p>Página en construcción. Responsable: <strong>Melissa</strong>.</p>
+                <ul>
+                    <li>HU1 — Crear propietario (POST /api/v1/usuarios/propietario)</li>
+                    <li>HU2 — Crear restaurante (POST /api/v1/restaurantes)</li>
+                    <li>Listado de restaurantes (GET /api/v1/restaurantes)</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer id="pie"></footer>
+    <script type="module" src="js/paginas/admin.js"></script>
+</body>
+</html>

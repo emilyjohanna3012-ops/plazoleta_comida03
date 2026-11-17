@@ -1,0 +1,27 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: plazoleta-ms
+  datasource:
+    url: jdbc:mysql://localhost:3306/plazoleta_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota
+    username: ${DB_USER:root}
+    # La contraseña NO se escribe aquí: se toma de la variable de entorno DB_PASSWORD
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  jackson:
+    deserialization:
+      # Para que un precio como 10.5 se rechace en lugar de truncarse a 10
+      accept-float-as-int: false
+
+# Dirección del microservicio de Usuarios (para validar el rol del propietario en la HU2)
+usuarios:
+  url: ${USUARIOS_URL:http://localhost:8081}
+
+# HU5: debe ser EXACTAMENTE la misma clave JWT_SECRET que usa usuarios-ms (mínimo 32 caracteres)
+jwt:
+  secret: ${JWT_SECRET}

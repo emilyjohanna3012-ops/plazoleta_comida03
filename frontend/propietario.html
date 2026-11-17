@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi restaurante · Plazoleta de comidas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentes.css">
+    <!-- Melissa: si su página necesita estilos propios, créenlos en css/propietario.css y enlácenlos aquí -->
+</head>
+<body>
+    <header id="encabezado"></header>
+
+    <main class="pagina">
+        <div class="contenedor" id="contenido">
+            <!-- Melissa: aquí va el contenido de esta página (lo pinta js/paginas/propietario.js) -->
+            <section class="tarjeta construccion">
+                <div class="vacio__icono" data-icono="cocina"></div>
+                <h1>Mi restaurante</h1>
+                <p>Página en construcción. Responsable: <strong>Melissa</strong>.</p>
+                <ul>
+                    <li>Mis restaurantes (GET /api/v1/restaurantes/propietario)</li>
+                    <li>HU3, HU4, HU7 — Crear, modificar y habilitar platos (/api/v1/platos)</li>
+                    <li>HU6 — Crear empleado (POST /api/v1/usuarios/empleado)</li>
+                    <li>HU18 — Eficiencia (GET /api/v1/pedidos/eficiencia?idRestaurante=)</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer id="pie"></footer>
+    <script type="module" src="js/paginas/propietario.js"></script>
+</body>
+</html>

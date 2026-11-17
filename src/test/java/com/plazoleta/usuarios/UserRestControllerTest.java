@@ -28,7 +28,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     "jwt.expiration=3600000"
 })
 @AutoConfigureMockMvc
-class UserRestControllerIT {
+/*
+ * Se llama ...Test (y no ...IT) para que "mvn test" la ejecute: Maven, con su configuración por defecto
+ * (maven-surefire-plugin), solo corre las clases que terminan en Test, Tests o TestCase.
+ */
+class UserRestControllerTest {
 
     @Autowired
     private MockMvc mvc;
